@@ -1,0 +1,71 @@
+create table aluno(
+	ID INT PRIMARY KEY IDENTITY(1,1), 
+	Nome VARCHAR(70), 
+	SobreNome VARCHAR(70))
+
+CREATE table prova(
+	ID INT PRIMARY KEY IDENTITY(1,1), 
+	NumeroProva int )
+
+CREATE table ProvaAluno(
+	ID INT PRIMARY KEY IDENTITY(1,1), 
+	AlunoId int,
+	ProvaId int,
+	Nota float)
+
+ALTER TABLE ProvaAluno
+ADD CONSTRAINT Fk_ProvaAluno_Aluno 
+FOREIGN KEY(AlunoId)
+REFERENCES Aluno(ID) 
+ALTER TABLE ProvaAluno
+ADD CONSTRAINT Fk_ProvaAluno_Prova
+FOREIGN KEY(ProvaId)
+REFERENCES Prova(ID)
+
+CREATE TABLE Gabarito(
+	ID INT PRIMARY KEY IDENTITY(1,1), 
+	Questao int, 
+	PesoQuestao INT, 
+	OpcaoCorreta char,
+	ProvaId int,
+	)
+
+ALTER TABLE Gabarito
+ADD CONSTRAINT Fk_Gabarito_Prova
+FOREIGN KEY(ProvaId)
+REFERENCES Prova(ID)
+
+CREATE TABLE RespostaAluno(
+	ID INT PRIMARY KEY IDENTITY(1,1), 
+	ProvaId int, 
+	GabaritoId INT, 
+	AlunoId int,
+	Resposta char,
+	)
+
+ALTER TABLE RespostaAluno
+ADD CONSTRAINT Fk_RespostaAluno_Prova
+FOREIGN KEY(ProvaId)
+REFERENCES Prova(ID)
+ALTER TABLE RespostaAluno
+ADD CONSTRAINT Fk_RespostaAluno_Gabarito
+FOREIGN KEY(GabaritoId)
+REFERENCES Gabarito(ID)
+ALTER TABLE RespostaAluno
+ADD CONSTRAINT Fk_RespostaAluno_Aluno
+FOREIGN KEY(AlunoId)
+REFERENCES Aluno(ID)
+
+CREATE TABLE Situacao(
+	ID INT PRIMARY KEY IDENTITY(1,1), 
+	AlunoId int, 
+	Media float, 
+	Aprovado char,
+	)
+
+ALTER TABLE Situacao
+ADD CONSTRAINT Fk_Situacao_Aluno
+FOREIGN KEY(AlunoId)
+REFERENCES Aluno(ID)
+
+
